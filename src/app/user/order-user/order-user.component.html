@@ -1,0 +1,43 @@
+<div class="row g-2">
+    <nav class="nav flex-column col-md-2">
+        <h4 class="modal-title ps-3 text-primary">{{identity.name}}</h4>
+        <a class="nav-link" [routerLink]="['/user/perfil']">
+            Perfil
+        </a>
+        <a class="nav-link" [routerLink]="['/user/notificaciones']">
+            Notificaciones <span class="badge text-bg-danger">4</span>
+        </a>
+    
+        <a class="nav-link" [routerLink]="['/user/home']">
+            Tiendas
+        </a>
+    
+        <a class="nav-link" [routerLink]="['/user/orders']">
+            Ordenes <span class="badge text-bg-danger" *ngIf="quantity > 0">{{quantity}}</span>
+        </a>
+    </nav>
+
+    <div class="col-md-10">
+        <div class="col-md-12 row g-2 mt-0">
+            <form class="d-flex col-md-12 mt-0" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-sm btn-outline-primary me-2" type="submit">Search</button>
+            </form>
+            <hr class="mt-1 mb-2">
+
+            <div class="alert alert-info mt-1" *ngIf="orders.length < 1">{{message}}</div>
+
+            <div class="col-md-12 row g-3">
+                <div class="card" style="width: 18rem;" *ngFor="let order of orders"> 
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+            </div>
+
+        </div>
+    </div>
+</div>

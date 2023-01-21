@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+a{
+    cursor: pointer;
+}
+.container{
+    min-height: 474px;
+}
+
+.b-e{
+    border-right: 1px solid rgb(13,110,253);
+}
+
+.img-background{
+    background-image: url("./assets/img/ventas.png");
+    background-size:  100% 100%;
+    background-repeat: no-repeat;
+}
+
+.footer{
+    min-height: 100px;
+}

@@ -1,0 +1,46 @@
+<div class="row g-2">
+    <nav class="nav flex-column col-md-2">
+        <h4 class="modal-title ps-3 text-primary">{{identity.name}}</h4>
+        <a class="nav-link" [routerLink]="['/user/perfil']">
+            Perfil
+        </a>
+        <a class="nav-link" [routerLink]="['/user/notificaciones']">
+            Notificaciones <span class="badge text-bg-danger">4</span>
+        </a>
+    
+        <a class="nav-link" [routerLink]="['/user/home']">
+            Tiendas <span class="badge text-bg-danger"></span>
+        </a>
+    
+        <a class="nav-link" [routerLink]="['/user/orders']">
+            Ordenes 
+        </a>
+    </nav>
+
+    <div class="col-md-10">
+        <div class="col-md-12 row g-2 mt-0">
+            <form class="d-flex col-md-12 mt-0" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-sm btn-outline-primary me-2" type="submit">Search</button>
+            </form>
+            <hr class="mt-1 mb-2">
+
+            <div class="row g-3 mt-0">
+                <div class="col-md-12 mt-0 alert {{css}}" *ngIf="shops.length < 1">{{messageResponse}}</div>
+                
+                <div class="card mt-0 mb-4" style="width: 18rem;" *ngFor="let shop of shops">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title text-primary">{{shop.nameShop}}</h5>
+                      <p class="card-text">{{shop.description}}</p>
+                      <div class="col-md-12 d-flex justify-content-end">
+                        <a class="btn btn-sm btn-primary" [routerLink]="['/user/shop/', shop.id]">Ver Productos</a>
+                      </div>
+                    </div>
+                  </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

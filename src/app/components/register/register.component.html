@@ -1,0 +1,186 @@
+<div class="mt-5 row mb-5">
+    <div class="col-md-10 ms-auto me-auto row g-2 border border-primary rounded p-0">
+        <div class="col-md-6 mt-0 p-0 b-e img-background">
+        </div>
+        <div class="col-md-6 mt-0 me-0 p-0">
+            <div class="col-md-12 d-flex justify-content-end aling-items-center  ps-0 pe-0 pt-4 pb-0">
+                <a class="nav-link text-primary" id="user" (click)="d_none()">Usuario</a>
+                <a class="nav-link text-primary ms-3 me-3" id="shop" (click)="d_none()">Empresario</a>
+            </div>
+            <div class="col-md-11 ms-auto me-auto mb-0 alert {{css}} mt-3">
+                {{message}}
+            </div>
+            <form class="col-md-12 p-2 mt-0 row g-2 mb-3" id="formUser" #userForm="ngForm" (ngSubmit)="formUser(userForm)">
+                <div class="mt-3 col-md-6">
+                    <label for="name" class="label-control">Nombre</label>
+                    <input type="text" class="form-control" 
+                        name="name" id="name"
+                        #name="ngModel" [(ngModel)]="user.name"
+                        pattern="[a-zA-Z\s]{3,20}" required
+                    >
+                    <small class="d-block invalid-feedback" *ngIf="!name.valid && name.touched">
+                        El campo debe contener de 3 a 20 caracteres...
+                    </small>
+                </div>
+
+                <div class="mt-3 col-md-6">
+                    <label for="name" class="label-control">Apellidos</label>
+                    <input type="text" class="form-control" 
+                        name="lastname" id="lastname"
+                        #lastname="ngModel" [(ngModel)]="user.lastname"
+                        minlength="3" maxlength="20"
+                        pattern="[a-zA-Z\s]{3,20}" required
+                    >
+                    <small class="d-block invalid-feedback" *ngIf="!lastname.valid && lastname.touched">
+                        El campo debe contener de 3 a 20 caracteres...
+                    </small>
+                </div>
+
+                <div class="col-md-6 mt-3">
+                    <label for="typeDocument">Tipo de documento</label>
+                    <select class="form-select" 
+                        name="typeDocument" id="typeDocument"
+                        #typeDocument="ngModel" [(ngModel)]="user.typeDocument"
+                        required
+                    >
+                        <option value="Cedula de ciudadania">Cedula de ciudadania</option>
+                        <option value="Libreta Militar">Libreta Militar</option>
+                    </select>
+
+                    <small class="d-block invalid-feedback" *ngIf="typeDocument.touched && typeDocument.value == ''">
+                        Seleccione tipo de documento...
+                    </small>
+                </div>
+
+                <div class="col-md-6 mt-3">
+                    <label for="document">Numero de documento</label>
+                    <input type="text" class="form-control" 
+                        name="document" id="document" maxlength="20"
+                        #document="ngModel" [(ngModel)]="user.document"
+                        pattern="[a-zA-Z\d\s]{7,20}" required
+                    >
+                    <small class="d-block invalid-feedback" *ngIf="!document.valid && document.touched">
+                        El campo debe contener de 7 a 20 caracteres
+                    </small>
+                </div>
+
+
+                <div class="col-md-12">
+                    <label for="email">Correo Electronico</label>
+                    <input type="email" class="form-control" 
+                        name="email" id="email"
+                        #email="ngModel" [(ngModel)]="user.email"
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" required
+                    >
+                    <small class="d-block invalid-feedback" *ngIf="!email.valid && email.touched">
+                        Formato del correo invalido...
+                    </small>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="password">Contraseña</label>
+                    <input type="password" class="form-control"
+                        name="password" id="password" maxlength="12"
+                        #password="ngModel" [(ngModel)]="user.password"
+                        pattern="[a-zA-Z\d]{8,12}" required
+                    >
+                    <small class="d-block invalid-feedback" *ngIf="!password.valid && password.touched">
+                        El campo debe tener de 8 a 12 caracteres...
+                    </small>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="password">Confirmar contraseña</label>
+                    <input type="password" class="form-control"
+                        name="pass" id="pass" maxlength="12"
+                        #pass="ngModel" [(ngModel)]="user.pass"
+                        pattern="[a-zA-Z\d]{8,12}" required
+                    >
+                    <small class="d-block invalid-feedback" *ngIf="!pass.valid && pass.touched">
+                        El campo debe tener de 8 a 12 caracteres...
+                    </small>
+                    <small class="d-block invalid-feedback" *ngIf="password.value != pass.value">
+                        Ingrese la contraseña anterior...
+                    </small>
+                </div>
+
+                <div class="col-md-12 mt-2 d-flex  justify-content-end">
+                    <button type="submit" class="btn btn-sm btn-primary" [disabled]="userForm.invalid">Registrarse</button>
+                </div>
+
+            </form>
+
+            <form  class="col-md-12 p-2 d-none row mb-3 g-2" id="formShop" #shopForm="ngForm" (ngSubmit)="formShop(shopForm)">
+
+                <div class="mt-3 col-md-12">
+                    <label for="nameShop" class="label-control">Nombre Tienda</label>
+                    <input type="text" class="form-control" 
+                        name="nameShop" id="nameShop"
+                        #nameShop="ngModel" [(ngModel)]="shop.nameShop"
+                        pattern="[a-zA-Z\s]{3,20}" required
+                    >
+                    <small class="d-block invalid-feedback" *ngIf="!nameShop.valid && nameShop.touched">
+                        El campo debe contener de tres a 20 caracteres...
+                    </small>
+                </div>
+
+                <div class="mt-3 col-md-12">
+                    <label for="nit">Nit</label>
+                    <input type="text" class="form-control" 
+                        name="nit" id="nit"
+                        #nit="ngModel" [(ngModel)]="shop.nitShop"
+                        minlength="12" maxlength="12"
+                        pattern="[\d]{12}" required
+                    >
+                    <small class="d-block invalid-feedback" *ngIf="!nit.valid && nit.touched">
+                        El campo debe contener de 12 caracteres...
+                    </small>
+                </div>
+
+                <div class="mt-3 col-md-12">
+                    <label for="emailShop">Correo Electronico</label>
+                    <input type="email" class="form-control" 
+                        name="emailShop" id="emailShop"
+                        #emailShop="ngModel" [(ngModel)]="shop.email"
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" required
+                    >
+                    <small class="d-block invalid-feedback" *ngIf="!emailShop.valid && emailShop.touched">
+                        Formato de correo invalido
+                    </small>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="passwordShop">Contraseña</label>
+                    <input type="password" class="form-control" 
+                        name="passwordShop" id="passwordShop" maxlength="12"
+                        #passwordShop="ngModel" [(ngModel)]="shop.password"
+                        pattern="[a-zA-Z\d]{8,12}" required
+                    >
+                    <small class="d-block invalid-feedback" *ngIf="!passwordShop.valid && passwordShop.touched">
+                        El campo debe contener de 8 a 12 caracteres
+                    </small>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="passShop">Confirmar contraseña</label>
+                    <input type="password" class="form-control" 
+                        name="passShop" id="passShop" maxlength="12"
+                        #passShop="ngModel" [(ngModel)]="shop.pass"
+                        pattern="[a-zA-Z\d]{8,12}" required
+                    >
+                    <small class="d-block invalid-feedback" *ngIf="!passwordShop.valid && passwordShop.touched">
+                        El campo debe contener de 8 a 12 caracteres
+                    </small>
+                    <small class="d-block invalid-feedback" *ngIf="passwordShop.value != passShop.value">
+                        Ingrese la contraseña anterio...
+                    </small>
+                </div>
+
+                <div class="col-md-12 d-flex  mt-2 justify-content-end">
+                    <button type="submit" class="btn btn-sm btn-primary" [disabled]="shopForm.invalid">Registrarse</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

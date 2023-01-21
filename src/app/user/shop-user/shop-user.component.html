@@ -1,0 +1,77 @@
+<div class="row g-2">
+    <nav class="nav flex-column col-md-2">
+        <h4 class="modal-title ps-3 text-primary">{{identity.name}}</h4>
+        <a class="nav-link" [routerLink]="['/user/perfil']">
+            Perfil
+        </a>
+        <a class="nav-link" [routerLink]="['/user/notificaciones']">
+            Notificaciones <span class="badge text-bg-danger">4</span>
+        </a>
+    
+        <a class="nav-link" [routerLink]="['/user/home']">
+            Tiendas <span class="badge text-bg-danger"></span>
+        </a>
+    
+        <a class="nav-link" [routerLink]="['/user/orders']">
+            Ordenes 
+        </a>
+    </nav>
+
+    <div class="col-md-10">
+        <div class="col-md-12 row g-2 mt-0">
+            <form class="d-flex col-md-12 mt-0" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-sm btn-outline-primary me-2" type="submit">Search</button>
+            </form>
+            <hr class="mt-1 mb-2">
+
+            <div class="row g-3 mt-0">
+                <div class="col-md-12 mt-0 alert {{css}}" *ngIf="products.length < 1">{{message}}</div>
+                
+                <div class="card mt-0 ms-2 me-2 mb-4" style="width: 18rem;" *ngFor="let product of products">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title text-primary">{{product.product}}</h5>
+                      <p class="card-text">{{product.presentation}}</p>
+                      <div class="col-md-12 d-flex justify-content-end">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Ordenar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">Ordenar Producto</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert {{css}}">¿Desea Ordenar este producto?</div>
+
+          <form class="" #orderForm="ngForm" (submit)="onSubmit(orderForm)">
+
+
+              <div class="modal-footer">
+                
+                <button type="submit" class="btn btn-sm btn-primary" [disabled]="orderForm.invalid">Ordenar</button>
+                asdkajksdjaljsdljaklsdjag
+                ahsdajskdjalsdasdasd
+                asdjkajksdjlasdsads
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

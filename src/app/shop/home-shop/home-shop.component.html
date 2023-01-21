@@ -1,0 +1,198 @@
+<div class="row g-2">
+    <nav class="nav flex-column col-md-2">
+        <h3 class="modal-title ps-3 text-primary">{{identity.nameShop}}</h3>
+        <a class="nav-link" [routerLink]="['/shop/perfil']">
+            Perfil
+        </a>
+        <a class="nav-link" [routerLink]="['/shop/notificaciones']">
+            Notificaciones 
+        </a>
+    
+        <a class="nav-link" [routerLink]="['/shop/home']">
+            Productos <span class="badge text-bg-danger" *ngIf="cantidad > 0">{{cantidad}}</span>
+        </a>
+    
+        <a class="nav-link" [routerLink]="['/shop/orders']">
+            Ordenes
+        </a>
+    </nav>
+
+    <div class="col-md-10">
+        <div class="col-md-12 row g-2 mt-0">
+            <form class="d-flex col-md-12 mt-0" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-sm btn-outline-primary me-2" type="submit">Search</button>
+                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addProduct">
+                    <i class="fa-regular fa-plus"></i>
+                </button>
+            </form>
+            <hr class="mt-1">
+
+            <div class="row g-3 mt-0">
+                <div class="col-md-12 mt-0 alert {{css}}" *ngIf="cantidad < 1">{{mensajeResponse}}</div>
+                <div class="card mt-0 ms-2 me-2 mb-4" style="width: 18rem;" *ngFor="let producto of products">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">{{producto.product}}</h5>
+                      <p class="card-text mb-1">{{producto.presentation}}</p>
+                      <p class="card-text mb-1">cantidad: {{producto.quantity}}</p>
+                      <p class="card-text">Precio: {{producto.price}}</p>
+                      <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#updateProduct" (click)="getProduct(producto.id)">ver Producto</button>
+                      </div>
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="updateProduct" tabindex="-1" aria-labelledby="updateProductLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title text-primary" id="updateProductLabel">{{updateProducto.product}}</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert {{css}}">
+                                {{alert}}
+                            </div>
+                    
+                            <form #updateProduct="ngForm" (ngSubmit)="onUpdate(updateProduct)">
+                                <div class="mt-3">
+                                    <label for="product" class="label-control text-primary">Producto</label>
+                                    <input type="text" class="form-control"
+                                        name="product" id="product"
+                                        #nameProduct="ngModel" [(ngModel)]="updateProducto.product" 
+                                        pattern="[a-zA-Z\s]{3,20}" required
+                                    >
+                                    <small class="invalid-feedback d-block" *ngIf="!nameProduct.valid && nameProduct.touched">
+                                        El campo debe contener de 3 a 20 caractes ...
+                                    </small>
+                                </div>
+                    
+                                <div class="mt-3">
+                                    <label for="presentation" class="label-control text-primary">Presentacion</label>
+                                    <textarea class="form-control"
+                                        cols="10" rows="3"
+                                        name="presentation" id="presentation"
+                                        #presentationP="ngModel" [(ngModel)]="updateProducto.presentation" 
+                                        pattern="[a-zA-Z\s\d]{3,250}" required
+                                    ></textarea>
+                                    <small class="invalid-feedback d-block" *ngIf="!presentationP.valid && presentationP.touched">
+                                        El campo debe contener de 3 caractes o superior ...
+                                    </small>
+                                </div>
+                    
+                                <div class="mt-3">
+                                    <label for="quantity" class="label-control text-primary">cantidad</label>
+                                    <input type="number" class="form-control"
+                                        name="quantity" id="quantity"
+                                        min="0"
+                                        #quantityP="ngModel" [(ngModel)]="updateProducto.quantity" 
+                                        required
+                                    >
+                                    <small class="invalid-feedback d-block" *ngIf="quantityP.value == 0">
+                                        Ingrese una cantidad superior a 0...
+                                    </small>
+                                </div>
+                    
+                                <div class="mt-3">
+                                    <label for="price" class="label-control text-primary">Precio x unidad</label>
+                                    <input type="number" class="form-control"
+                                        name="price" id="price"
+                                        min="0"
+                                        #priceP="ngModel" [(ngModel)]="updateProducto.price" 
+                                        required
+                                    >
+                                    <small class="invalid-feedback d-block" *ngIf="priceP.value == 0">
+                                        Ingrese el precio del producto...
+                                    </small>
+                                </div>
+                    
+                                <div class="modal-footer">
+                                <button type="submit" class="btn btn-sm btn-primary" [disabled]="updateProduct.invalid">Actualizar</button>
+                                </div>
+                            </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="addProduct" tabindex="-1" aria-labelledby="addProductLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="addProductLabel">Agregar Producto</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert {{css}}">
+            {{message}}
+          </div>
+
+          <form #addProduct="ngForm" (ngSubmit)="onSubmit(addProduct)">
+            <div class="mt-3">
+                <label for="product" class="label-control text-primary">Producto</label>
+                <input type="text" class="form-control"
+                    name="product" id="product"
+                    #product="ngModel" [(ngModel)]="producto.product" 
+                    pattern="[a-zA-Z\s]{3,20}" required
+                >
+                <small class="invalid-feedback d-block" *ngIf="!product.valid && product.touched">
+                    El campo debe contener de 3 a 20 caractes ...
+                </small>
+            </div>
+
+            <div class="mt-3">
+                <label for="presentation" class="label-control text-primary">Presentacion</label>
+                <textarea class="form-control"
+                    cols="10" rows="3"
+                    name="presentation" id="presentation"
+                    #presentation="ngModel" [(ngModel)]="producto.presentation" 
+                    pattern="[a-zA-Z\s\d]{3,250}" required
+                ></textarea>
+                <small class="invalid-feedback d-block" *ngIf="!presentation.valid && presentation.touched">
+                    El campo debe contener de 3 caractes o superior ...
+                </small>
+            </div>
+
+            <div class="mt-3">
+                <label for="quantity" class="label-control text-primary">cantidad</label>
+                <input type="number" class="form-control"
+                    name="quantity" id="quantity"
+                    min="0"
+                    #quantity="ngModel" [(ngModel)]="producto.quantity" 
+                    required
+                >
+                <small class="invalid-feedback d-block" *ngIf="quantity.value == 0">
+                    Ingrese una cantidad superior a 0...
+                </small>
+            </div>
+
+            <div class="mt-3">
+                <label for="price" class="label-control text-primary">Precio x unidad</label>
+                <input type="number" class="form-control"
+                    name="price" id="price"
+                    min="0"
+                    #price="ngModel" [(ngModel)]="producto.price" 
+                    required
+                >
+                <small class="invalid-feedback d-block" *ngIf="price.value == 0">
+                    Ingrese el precio del producto...
+                </small>
+            </div>
+
+            <div class="modal-footer">
+            <button type="submit" class="btn btn-sm btn-primary" [disabled]="addProduct.invalid">Agregar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
