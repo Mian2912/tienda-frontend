@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Order } from 'src/app/models/order';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
 import { UserService } from 'src/app/services/user.service';
@@ -16,6 +17,7 @@ export class ShopUserComponent implements OnInit{
   protected css:string;
   protected message:any;
   protected products:Product[];
+  protected order:Order;
 
   public constructor(
     private _route:ActivatedRoute,
@@ -27,6 +29,7 @@ export class ShopUserComponent implements OnInit{
     this.products = [];
     this.css = 'alert-info'
     this.message = ''
+    this.order = new Order(1,1,1,1,1,1,1,1);
   }
 
   public ngOnInit(): void {
@@ -45,7 +48,7 @@ export class ShopUserComponent implements OnInit{
   }
 
   protected onSubmit(form:any){
-
+    
   }
 
 }
