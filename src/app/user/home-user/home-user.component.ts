@@ -46,4 +46,21 @@ export class HomeUserComponent implements OnInit{
     );
     
   }
+
+  protected searchShop(shop:string){
+    if(shop.length > 0){
+      this._shopService.getShopBySearch(shop, this.token).subscribe(
+        response => {
+          if(response.status == 'accepted'){
+            this.messageResponse = response.message;
+            this.shops = []
+          }else{
+            this.shops = response.shops;
+          }
+        }, error => console.warn(error)
+      );
+    }else{
+      this.getShops();
+    }
+  }
 }

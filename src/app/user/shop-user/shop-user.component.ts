@@ -17,7 +17,8 @@ export class ShopUserComponent implements OnInit{
   protected identity:any;
   private token:any;
   protected css:string;
-  protected message:string;
+  protected message:any;
+  protected messageForm:string;
   protected products:Product[];
   protected order:Order;
   protected user:User;
@@ -32,7 +33,7 @@ export class ShopUserComponent implements OnInit{
     this.token = this._userService.getToken();
     this.products = [];
     this.css = 'alert-info';
-    this.message = '¿Desea Ordenar este producto?';
+    this.messageForm = '¿Desea Ordenar este producto?';
     this.order = new Order(1, 1, 1, '','','',1, 1, 1, 1, 1);
     this.user = new User(1,'', '', '', '', '', '', '', '', '');
   }
@@ -89,12 +90,36 @@ export class ShopUserComponent implements OnInit{
     );
   }
 
+  protected getResults(searched:string){
+    this._route.params.subscribe( params => {
+      let shop = params['id'];
+
+      if(searched.length > 0){
+        this._orderService.searchedProduct(shop, searched, this.token).subscribe(
+          response => {
+            if(response.status == 'accepted'){
+              this.products = [];
+              this.message = response.message;
+            }else{
+              this.products = response.products;
+            }
+          },
+          error => console.log(error)
+        );
+      }else{
+        this.getProductByShop();
+      }
+
+    })
+
+  }
+
   private loadAlert(response:any, css:string){
     this.css = css;
-    this.message = response.message;
+    this.messageForm = response.message;
     setTimeout(() => {
       this.css = 'alert-info';
-      this.message = '¿Desea Ordenar este producto?';
+      this.messageForm = '¿Desea Ordenar este producto?';
     }, 3000);
   }
 

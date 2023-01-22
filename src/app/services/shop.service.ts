@@ -55,4 +55,9 @@ export class ShopService{
         let headers = new HttpHeaders().set('Authorization', token);
         return this._http.get(this.url+"shops", {headers:headers});
     }
+
+    public getShopBySearch(search:string, token:string):Observable<any>{
+        let headers = new HttpHeaders().set('Authorization', token);
+        return this._http.get(this.url+"user/shop/"+search, {headers:headers});
+    }
 }

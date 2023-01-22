@@ -39,7 +39,11 @@ export class OrderService{
         let params = 'json='+json;
         let headers = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/x-www-form-urlencoded');
         return this._http.put(this.url+"user/order/"+order.id, params, {headers:headers});
+    }
 
+    public searchedProduct(shop:number, searched:string, token:string):Observable<any>{
+        let headers = new HttpHeaders().set('Authorization', token);
+        return this._http.get(this.url+"user/products/"+shop+"/"+searched, {headers:headers});
     }
 
 }
