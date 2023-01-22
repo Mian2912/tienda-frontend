@@ -31,11 +31,20 @@
                 <div class="card mt-0 ms-2 me-2 mb-4" style="width: 18rem;" *ngFor="let product of products">
                     <img src="..." class="card-img-top" alt="...">
                     <div class="card-body">
-                      <h5 class="card-title text-primary">{{product.product}}</h5>
-                      <p class="card-text">{{product.presentation}}</p>
-                      <div class="col-md-12 d-flex justify-content-end">
+                        <h5 class="card-title text-primary">{{product.product}}</h5>
+                        <p class="card-text mt-1 mb-1">
+                            <b class="d-block text-primary">Presentacion</b>{{product.presentation}}
+                        </p>
+                        <p class="card-text mt-1 mb-1">
+                            <b class="d-block text-primary">Cantidad</b>{{product.quantity}}
+                        </p>
+                        <p class="card-text mt-1 mb-1">
+                            <b class="d-block text-primary">Precio</b>{{product.price}}
+                        </p>
+                        <div class="col-md-12 d-flex justify-content-end">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button type="button" class="btn btn-sm btn-primary" (click)="getUser(product.id)"
+                            data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Ordenar
                         </button>
                       </div>
@@ -57,36 +66,44 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="alert {{css}}">¿Desea Ordenar este producto?</div>
+          <div class="alert {{css}}">{{message}}</div>
 
-          <form class="" #orderForm="ngForm" (submit)="onSubmit(orderForm)">
-            <div class="mt-3">
+          <form class="row g-2" #orderForm="ngForm" (submit)="onSubmit(orderForm)">
+            <div class="mt-3 col-md-12">
                 <label class="text-primary" for="">Nombre</label>
                 <input type="text" class="form-control" 
                     name="name" id="name"
-                    #name="ngModel" [(ngModel)]="order.id_user"
+                    #name="ngModel" [(ngModel)]="order.nameUser"
                 >
             </div>
 
-            <div class="mt-3">
-                <label class="text-primary" for="">Producto</label>
+            <div class="mt-3 col-md-6">
+                <label class="text-primary" for="phone">Telefono</label>
                 <input type="text" class="form-control" 
-                    name="product" id="product"
-                    #product="ngModel" [(ngModel)]="order.id_product"
+                    name="phone" id="phone"
+                    #phone="ngModel" [(ngModel)]="order.phone"
                 >
             </div>
 
-            <div class="mt-3">
+            <div class="mt-3 col-md-6">
+                <label class="text-primary" for="address">Direccion</label>
+                <input type="text" class="form-control" 
+                    name="address" id="address"
+                    #address="ngModel" [(ngModel)]="order.address"
+                >
+            </div>
+
+            <div class="mt-3 col-md-6">
                 <label class="text-primary" for="">Precio</label>
                 <input type="text" class="form-control" 
-                    name="price" id="price"
+                    name="price" id="price" disabled="true"
                     #price="ngModel" [(ngModel)]="order.unit_value"
                 >
             </div>
 
-            <div class="mt-3">
+            <div class="mt-3 col-md-6">
                 <label class="text-primary" for="">Cantidad</label>
-                <input type="text" class="form-control" 
+                <input type="number" class="form-control" min="1"
                     name="quantity" id="quantity"
                     #quantity="ngModel" [(ngModel)]="order.quantity"
                 >
@@ -95,8 +112,8 @@
             <div class="mt-3">
                 <label class="text-primary" for="">Valor total</label>
                 <input type="text" class="form-control" 
-                    name="fullValue" id="fullValue"
-                    #fullValue="ngModel" [(ngModel)]="order.full_value"    
+                    name="fullValue" id="fullValue" [value]="price.value * quantity.value"
+                    #fullValue="ngModel" [(ngModel)]="order.full_value" disabled="true"   
                 >
             </div>
 

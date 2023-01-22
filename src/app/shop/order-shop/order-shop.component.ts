@@ -24,7 +24,7 @@ export class OrderShopComponent implements OnInit{
   ){
     this.identity = this._shopService.getIdentity();
     this.token = this._shopService.getToken();
-    this.order = new Order(this.identity.sub,1,1,1,1,1,1,1);
+    this.order = new Order(this.identity.sub,1,1,'','','',1,1,1,1,1);
     this.orders = [];
     this.css = 'alert-info';
     this.quantity = 0;

@@ -7,13 +7,13 @@
         <a class="nav-link" [routerLink]="['/user/notificaciones']">
             Notificaciones <span class="badge text-bg-danger">4</span>
         </a>
-    
+
         <a class="nav-link" [routerLink]="['/user/home']">
             Tiendas
         </a>
-    
+
         <a class="nav-link" [routerLink]="['/user/orders']">
-            Ordenes <span class="badge text-bg-danger" *ngIf="quantity > 0">{{quantity}}</span>
+            Ordenes <span class="badge text-bg-danger" *ngIf="cantidad > 0">{{cantidad}}</span>
         </a>
     </nav>
 
@@ -23,21 +23,97 @@
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-sm btn-outline-primary me-2" type="submit">Search</button>
             </form>
-            <hr class="mt-1 mb-2">
+            <hr class="mt-1 mb-1">
 
-            <div class="alert alert-info mt-1" *ngIf="orders.length < 1">{{message}}</div>
+            <div class="alert alert-info mb-1 mt-1" *ngIf="orders.length < 1">{{message}}</div>
 
-            <div class="col-md-12 row g-3">
-                <div class="card" style="width: 18rem;" *ngFor="let order of orders"> 
+            <div class="col-md-12 mt-0 row g-3">
+                <div class="card ms-2 me-2 mb-3" style="width: 18rem;" *ngFor="let order of orders">
                     <img src="..." class="card-img-top" alt="...">
                     <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <h5 class="card-title text-primary">{{order.nameUser}}</h5>
+                        <p class="card-text">precio {{order.unit_value}}</p>
+                        <p class="card-text">cantidad {{order.quantity}}</p>
+                        <p class="card-text">precio total {{order.full_value}}</p>
+                        <div class="col md-12 d-flex justify-content-end">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal" (click)="getOrder(order.id)">
+                                Ver Orden
+                            </button>
+                        </div>
                     </div>
-                  </div>
+                </div>
             </div>
-
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel">Ordenar Producto</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert {{css}}">{{message}}</div>
+
+          <form class="row g-2" #orderForm="ngForm" (submit)="onSubmit(orderForm)">
+            <div class="mt-3 col-md-12">
+                <label class="text-primary" for="">Nombre</label>
+                <input type="text" class="form-control" 
+                    name="name" id="name"
+                    #name="ngModel" [(ngModel)]="order.nameUser"
+                >
+            </div>
+
+            <div class="mt-3 col-md-6">
+                <label class="text-primary" for="phone">Telefono</label>
+                <input type="text" class="form-control" 
+                    name="phone" id="phone"
+                    #phone="ngModel" [(ngModel)]="order.phone"
+                >
+            </div>
+
+            <div class="mt-3 col-md-6">
+                <label class="text-primary" for="address">Direccion</label>
+                <input type="text" class="form-control" 
+                    name="address" id="address"
+                    #address="ngModel" [(ngModel)]="order.address"
+                >
+            </div>
+
+            <div class="mt-3 col-md-6">
+                <label class="text-primary" for="">Precio</label>
+                <input type="text" class="form-control" 
+                    name="price" id="price" disabled="true"
+                    #price="ngModel" [(ngModel)]="order.unit_value"
+                >
+            </div>
+
+            <div class="mt-3 col-md-6">
+                <label class="text-primary" for="">Cantidad</label>
+                <input type="number" class="form-control" min="1"
+                    name="quantity" id="quantity"
+                    #quantity="ngModel" [(ngModel)]="order.quantity"
+                >
+            </div>
+
+            <div class="mt-3">
+                <label class="text-primary" for="">Valor total</label>
+                <input type="text" class="form-control" 
+                    name="fullValue" id="fullValue" [value]="price.value * quantity.value"
+                    #fullValue="ngModel" [(ngModel)]="order.full_value" disabled="true"   
+                >
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-sm btn-primary" [disabled]="orderForm.invalid">Actualizar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
