@@ -13,9 +13,11 @@ export class OrderUserComponent implements OnInit{
   protected identity:any;
   private token:any;
   protected orders:Order[];
+  protected css:string;
   protected order:Order;
-  protected message:any;
-  protected quantity:number;
+  protected message:string;
+  protected cantidad:number;
+
 
   public constructor (
     private _userService:UserService,
@@ -24,8 +26,10 @@ export class OrderUserComponent implements OnInit{
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.orders = [];
-    this.order = new Order(1,1,1,1,1,1,1,1);
-    this.quantity = 0;
+    this.order = new Order(1,1,1,'','','',1,1,1,1,1);
+    this.cantidad = 0;
+    this.css = 'alert-info';
+    this.message = 'detalle de la orden';
   }
 
   public ngOnInit(): void {
@@ -40,11 +44,42 @@ export class OrderUserComponent implements OnInit{
           this.orders = [];
         }else{
           this.orders = response.orders;
-          this.quantity = response.quantity;
+          this.cantidad = response.quantity;
         }
       },
       error => console.log(error)
     );
+  }
+
+  protected getOrder(id:number){
+    this._orderService.getOrder(id, this.token).subscribe(
+      response => this.order = response.order,
+      error => console.log(error)
+    );
+  }
+
+  protected onSubmit(form:any){
+    this.order.full_value = this.order.quantity * this.order.unit_value;
+    this._orderService.updateOrder(this.order, this.token).subscribe(
+      response => {
+        if (response.status == 'accepted'){
+          this.loadAlert(response, 'alert-danger');
+        }else{
+          this.loadAlert(response, 'alert-success');
+        }
+      },
+      error => console.log(error)
+    );
+  }
+
+  private loadAlert(response:any, css:string){
+    this.css = css;
+    this.message = response.message;
+
+    setTimeout(() => {
+      this.css = 'alert-info';
+      this.message = 'detalle de la orden';
+    }, 3000);
   }
 
 
