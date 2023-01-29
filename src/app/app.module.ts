@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { routing, appRoutingProviders } from './app.routing';
 import { shopRouting, ShopRoutingProviders } from './shop/shop.routing';
 import { userRouting, UserRoutingProviders } from './user/user.routing';
+import { AngularFileUploaderModule } from 'angular-file-uploader';
 
 // component
 import { IndexComponent } from './components/index/index.component';
@@ -46,9 +47,10 @@ import { ShopUserComponent } from './user/shop-user/shop-user.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    AngularFileUploaderModule,
     routing,
     shopRouting,
-    userRouting
+    userRouting,
   ],
   providers: [
     appRoutingProviders,

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Shop } from 'src/app/models/shop';
 import { ShopService } from 'src/app/services/shop.service';
+import { global } from 'src/app/services/global';
+
 
 @Component({
   selector: 'app-profile-shop',
@@ -14,6 +16,24 @@ export class ProfileShopComponent implements OnInit{
   protected token:any;
   protected css:string;
   protected message:string;
+  protected url = global.url;
+  protected afuConfig = {
+    multiple: false,
+    formatsAllowed: ".jpg, .jpeg, .png",
+    maxSize: "20",
+    uploadAPI:  {
+        url: this.url+"shop/image",
+        method:"POST",
+        headers: {
+          "Authorization" : this._shopService.getToken()
+        }
+    },
+    theme: "attachPin",
+    hideProgressBar: false,
+    hideResetBtn: true,
+    hideSelectBtn: false,
+    attachPinText:'Editar Imagen'
+      };
 
 
   public constructor( private _shopService:ShopService ){
@@ -53,5 +73,11 @@ export class ProfileShopComponent implements OnInit{
       }, error => console.log(error)
     );
   }
+
+  protected imageProfile(data:any){
+    let json = JSON.parse(data.response);
+  }
+
+
 }
 // Supermecado Don Jose, donde encontrara un excelente servicio y los mejores productos de la canasta familiar a exceletes precios

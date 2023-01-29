@@ -18,11 +18,20 @@
     </nav>
 
     <div class="col-md-10">
-        <div class="mt-0">
-            <h3 class="text-primary mb-0">{{shop.nameShop}}</h3>
+        <div class="mt-0 row g-2">
+            <h3 class="text-primary mb-0 col-md-6">{{shop.nameShop}}</h3>
+            <div class="col-md-6 d-flex justify-content-end">
+            <angular-file-uploader
+                [config]="afuConfig"
+                (ApiResponse)="imageProfile($event)">
+                (Click)="getShop()"
+		    </angular-file-uploader>
+            </div>
         </div>
 
-        <hr class="mt-0">
+        <hr class="mt-1">
+        <img class="d-block w-100" src="{{url + 'shop/image/'+ shop.id}}" alt="" srcset="">
+        <hr class="mt-1">
 
         <div class="col-md-12">
             <h3 class="text-primary mb-0">Description</h3>
@@ -47,7 +56,7 @@
             <hr class="mt-0">
             <p>{{shop.address}}</p>
         </div>
-        <div class="col-md-12 d-flex justify-content-end">
+        <div class="col-md-12 mb-5 d-flex justify-content-end">
             <hr class="mb-0">
             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Editar

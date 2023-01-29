@@ -60,4 +60,5 @@ export class ShopService{
         let headers = new HttpHeaders().set('Authorization', token);
         return this._http.get(this.url+"user/shop/"+search, {headers:headers});
     }
+
 }
