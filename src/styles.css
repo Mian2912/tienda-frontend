@@ -19,3 +19,7 @@ a{
 .footer{
     min-height: 100px;
 }
+
+img.d-block.w-100 {
+    max-height: 400px;
+}
