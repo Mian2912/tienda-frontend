@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Order } from 'src/app/models/order';
 import { Product } from 'src/app/models/product';
 import { User } from 'src/app/models/user';
+import { global } from 'src/app/services/global';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
 import { UserService } from 'src/app/services/user.service';
@@ -22,6 +23,7 @@ export class ShopUserComponent implements OnInit{
   protected products:Product[];
   protected order:Order;
   protected user:User;
+  protected url:string;
 
   public constructor(
     private _route:ActivatedRoute,
@@ -36,6 +38,7 @@ export class ShopUserComponent implements OnInit{
     this.messageForm = '¿Desea Ordenar este producto?';
     this.order = new Order(1, 1, 1, '','','',1, 1, 1, 1, 1);
     this.user = new User(1,'', '', '', '', '', '', '', '', '');
+    this.url = global.url;
   }
 
   public ngOnInit(): void {

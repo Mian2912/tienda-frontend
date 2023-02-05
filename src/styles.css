@@ -23,3 +23,7 @@ a{
 img.d-block.w-100 {
     max-height: 400px;
 }
+
+img.card-img-top {
+    max-height: 200px;
+}

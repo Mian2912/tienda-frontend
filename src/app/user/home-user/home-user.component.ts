@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Shop } from 'src/app/models/shop';
+import { global } from 'src/app/services/global';
 import { ShopService } from 'src/app/services/shop.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -16,6 +17,7 @@ export class HomeUserComponent implements OnInit{
   protected quantity:any;
   protected messageResponse:any;
   protected shops:Shop[];
+  protected url:string;
 
   public constructor(
     private _userService:UserService,
@@ -24,6 +26,7 @@ export class HomeUserComponent implements OnInit{
     this.css = 'alert-info';
     this.shops = [];
     this.token = this._userService.getToken();
+    this.url = global.url;
   }
 
   ngOnInit(): void {

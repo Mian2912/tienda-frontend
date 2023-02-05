@@ -5,6 +5,7 @@ export class Product{
         public id:number,
         public product:string,
         public presentation:string,
+        public image:string,
         public quantity:number,
         public price:number,
         public id_shop:number

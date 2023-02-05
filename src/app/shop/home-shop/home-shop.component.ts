@@ -3,6 +3,7 @@ import { Shop } from 'src/app/models/shop';
 import { Product } from 'src/app/models/product';
 import { ShopService } from 'src/app/services/shop.service';
 import { ProductService } from 'src/app/services/product.service';
+import { global } from 'src/app/services/global';
 
 @Component({
   selector: 'app-home-shop',
@@ -22,7 +23,24 @@ export class HomeShopComponent implements OnInit{
   protected updateProducto:Product;
   protected cantidad:number;
   protected mensajeResponse:any;
-  
+  protected url:string;
+  protected afuConfig = {
+    multiple: false,
+    formatsAllowed: ".jpg, .png",
+    maxSize: "20",
+    uploadAPI:  {
+        url: global.url+"shop/products/image",
+        method:"POST",
+        headers: {
+          "Authorization" : this._shopService.getToken()
+        }
+    },
+    theme: "attachPin",
+    hideProgressBar: false,
+    hideResetBtn: true,
+    hideSelectBtn: false,
+    attachPinText:'Agregar Imagen'
+      };
 
   public constructor(
     private _shopService:ShopService,
@@ -30,14 +48,14 @@ export class HomeShopComponent implements OnInit{
   ){
     this.shop = new Shop(1,'','', '','', '', '', '','','','');
     this.identity = this._shopService.getIdentity(); 
-    this.producto = new Product(1,'','',0,0,this.identity.sub);
-    this.updateProducto = new Product(1,'','',0,0,this.identity.sub);
+    this.producto = new Product(1,'','','',0,0,this.identity.sub);
+    this.updateProducto = new Product(1,'','','',0,0,this.identity.sub);
     this.token = this._shopService.getToken();
     this.css = 'alert-info';
     this.message = 'Agregar Nuevo Producto';
     this.products = [];
     this.cantidad = 0;
-    
+    this.url = global.url;
   }
 
   ngOnInit(): void {
@@ -112,6 +130,10 @@ export class HomeShopComponent implements OnInit{
         }
       }, error => console.log(error)
     );
+  }
+
+  protected imageProduct(data:any){
+    this.producto.image = JSON.parse(data.response).image;
   }
 
 }

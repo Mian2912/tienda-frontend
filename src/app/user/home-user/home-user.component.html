@@ -30,15 +30,15 @@
                 <div class="col-md-12 mt-0 alert {{css}}" *ngIf="shops.length < 1">{{messageResponse}}</div>
                 
                 <div class="card mt-0 mb-4" style="width: 18rem;" *ngFor="let shop of shops">
-                    <img src="" class="card-img-top" alt="">
-                    <div class="card-body">
-                      <h5 class="card-title text-primary">{{shop.nameShop}}</h5>
-                      <p class="card-text">{{shop.description}}</p>
-                      <div class="col-md-12 d-flex justify-content-end">
+                    <img src="{{url+'shop/image/'+shop.id}}" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">{{shop.nameShop}}</h5>
+                    <p class="card-text">{{shop.description}}</p>
+                    <div class="col-md-12 d-flex justify-content-end">
                         <a class="btn btn-sm btn-primary" [routerLink]="['/user/shop/', shop.id]">Ver Productos</a>
-                      </div>
                     </div>
-                  </div>
+                    </div>
+                </div>
 
             </div>
         </div>
