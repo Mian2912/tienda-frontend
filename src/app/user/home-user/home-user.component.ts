@@ -35,7 +35,7 @@ export class HomeUserComponent implements OnInit{
   }
 
   private getShops(){
-    this._shopService.getShops(this.token).subscribe(
+    this._shopService.getShops().subscribe(
       response => {
         if(response.status == 'accepted'){
           this.messageResponse = response.message;
@@ -52,7 +52,7 @@ export class HomeUserComponent implements OnInit{
 
   protected searchShop(shop:string){
     if(shop.length > 0){
-      this._shopService.getShopBySearch(shop, this.token).subscribe(
+      this._shopService.getShopBySearch(shop).subscribe(
         response => {
           if(response.status == 'accepted'){
             this.messageResponse = response.message;

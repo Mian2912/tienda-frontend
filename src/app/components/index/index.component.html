@@ -1,1 +1,32 @@
-<p>index works!</p>
+<form action="">
+    <div class="mt-3">
+        <input type="search" 
+            class="form-control" 
+            name="" 
+            id=""
+            #seach
+            placeholder="Buscar..."
+            (keyup)="searchShop(seach.value)"
+        >
+    </div>
+</form>
+<hr class="mt-1">
+
+<div class="alert alert-info" *ngIf="shops.length < 1">
+    No se encontraron tiendas disponibles
+</div>
+<div class="row g-4">
+    <div class="card" style="width: 18rem;" *ngFor="let shop of shops">
+        <img src="{{url+'shop/image/'+shop.id}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{shop.nameShop}}</h5>
+          <p class="card-text">{{shop.description}}</p>
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-sm btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" *ngIf="!identityUser && !identityShop">
+                Ver productos
+              </button>
+          </div>
+        </div>
+      </div>
+
+</div>

@@ -51,14 +51,12 @@ export class ShopService{
         return this._http.put(this.url+"shop/profile", params, {headers:headers});
     }
 
-    public getShops(token:string):Observable<any>{
-        let headers = new HttpHeaders().set('Authorization', token);
-        return this._http.get(this.url+"shops", {headers:headers});
+    public getShops():Observable<any>{
+        return this._http.get(this.url+"shops");
     }
 
-    public getShopBySearch(search:string, token:string):Observable<any>{
-        let headers = new HttpHeaders().set('Authorization', token);
-        return this._http.get(this.url+"user/shop/"+search, {headers:headers});
+    public getShopBySearch(search:string):Observable<any>{
+        return this._http.get(this.url+"user/shop/"+search);
     }
 
 }
