@@ -27,3 +27,7 @@ img.d-block.w-100 {
 img.card-img-top {
     max-height: 200px;
 }
+.alert.position-fixed.top-0.end-0.me-5 {
+    margin-top: 100px;
+    margin-right: 30px;
+}

@@ -17,9 +17,8 @@ import { UserService } from 'src/app/services/user.service';
 export class ShopUserComponent implements OnInit{
   protected identity:any;
   private token:any;
-  protected css:string;
+  protected css:any;
   protected message:any;
-  protected messageForm:string;
   protected products:Product[];
   protected order:Order;
   protected user:User;
@@ -34,8 +33,6 @@ export class ShopUserComponent implements OnInit{
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.products = [];
-    this.css = 'alert-info';
-    this.messageForm = '¿Desea Ordenar este producto?';
     this.order = new Order(1, 1, 1, '','','',1, 1, 1, 1, 1);
     this.user = new User(1,'', '', '', '', '', '', '', '', '');
     this.url = global.url;
@@ -79,18 +76,23 @@ export class ShopUserComponent implements OnInit{
     );
   }
 
-  protected onSubmit(form:any){
-    this.order.full_value = this.order.unit_value * this.order.quantity;
-    this._orderService.sendOrder(this.order, this.token).subscribe(
-      response => {
-        if(response.status == 'accepted'){
-          this.loadAlert(response, 'alert-danger');
-        }else{
-          this.loadAlert(response, 'alert-success');
-        }
-      },
-      error => console.log(error)
-    );
+  protected addProduct(id:number){
+    this.order.id_product = id;
+    this.order.id_user = this.identity.sub;
+    this._route.params.subscribe( params => {
+      let idShop = params['id'];
+      this.order.id_shop = idShop;
+      this._orderService.sendOrder(this.order, this.token).subscribe(
+        response => {          
+          if(response.status == 'accepted')
+            this.loadAlert(response, 'alert-danger position-fixed top-0 end-0 me-5');
+          else
+            this.loadAlert(response, 'alert-success position-fixed top-0 end-0 me-5');
+          
+        }, error => console.log(error)
+        
+      );
+    });
   }
 
   protected getResults(searched:string){
@@ -119,10 +121,10 @@ export class ShopUserComponent implements OnInit{
 
   private loadAlert(response:any, css:string){
     this.css = css;
-    this.messageForm = response.message;
+    this.message = response.message;
     setTimeout(() => {
-      this.css = 'alert-info';
-      this.messageForm = '¿Desea Ordenar este producto?';
+      this.css = '';
+      this.message = '';
     }, 3000);
   }
 
