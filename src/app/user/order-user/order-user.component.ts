@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order';
+import { Shop } from 'src/app/models/shop';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -12,6 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 export class OrderUserComponent implements OnInit{
   protected identity:any;
   private token:any;
+  protected shops:Shop[];
   protected orders:Order[];
   protected css:string;
   protected order:Order;
@@ -25,6 +27,7 @@ export class OrderUserComponent implements OnInit{
   ){
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
+    this.shops = [];
     this.orders = [];
     this.order = new Order(1,1,1,'','','',1,1,1,1,1);
     this.cantidad = 0;
@@ -33,30 +36,10 @@ export class OrderUserComponent implements OnInit{
   }
 
   public ngOnInit(): void {
-    this.getOrders();
+
   }
 
-  private getOrders(){
-    this._orderService.allOrdersOfTheUser(this.token).subscribe(
-      response => {
-        if(response.status == 'accepted'){
-          this.message = response.message;
-          this.orders = [];
-        }else{
-          this.orders = response.orders;
-          this.cantidad = response.quantity;
-        }
-      },
-      error => console.log(error)
-    );
-  }
-
-  protected getOrder(id:number){
-    this._orderService.getOrder(id, this.token).subscribe(
-      response => this.order = response.order,
-      error => console.log(error)
-    );
-  }
+  
 
   protected onSubmit(form:any){
     this.order.full_value = this.order.quantity * this.order.unit_value;
